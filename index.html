@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome Birthday Girl</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: radial-gradient(circle at top, #ff80ff, #6a0dad);
+      overflow: hidden;
+      color: white;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3em;
+      text-shadow: 0 0 15px #fff, 0 0 30px #ff66ff, 0 0 45px #ff33cc;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff, 0 0 20px #ff66ff; }
+      to { text-shadow: 0 0 25px #fff, 0 0 50px #ff33cc, 0 0 75px #ff00ff; }
+    }
+    .btn {
+      margin-top: 30px;
+      padding: 15px 40px;
+      font-size: 1.5em;
+      color: white;
+      background: linear-gradient(45deg, #ff00ff, #ff66cc);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-shadow: 0 0 5px #fff;
+      box-shadow: 0 0 20px #ff66ff, 0 0 40px #ff33cc;
+      transition: transform 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn:hover { transform: scale(1.1); }
+    .star { position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%; animation: twinkle 4s infinite; }
+    @keyframes twinkle { 0%,100% { opacity:0.2; transform:scale(1); } 50% { opacity:1; transform:scale(1.5); } }
+  </style>
+</head>
+<body>
+  <h1>🌟 Welcome Birthday Girl 🌟</h1>
+  <button class="btn" onclick="begin()">Tap to Begin</button>
+
+  <script>
+    function begin() {
+      // Redirect to main page
+      window.location.href = "main.html";
+    }
+
+    // Floating stars
+    for(let i=0;i<40;i++){
+      let star=document.createElement("div");
+      star.className="star";
+      star.style.left=Math.random()*window.innerWidth+"px";
+      star.style.top=Math.random()*window.innerHeight+"px";
+      star.style.animationDuration=(2+Math.random()*3)+"s";
+      document.body.appendChild(star);
+    }
+  </script>
+</body>
+</html>

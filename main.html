@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Party Hub</title>
+<style>
+body {
+  margin:0;
+  font-family:'Comic Sans MS', cursive, sans-serif;
+  overflow-x:hidden;
+  color:#fff;
+  text-align:center;
+  background: radial-gradient(circle at 50% 50%, #ff9a9e, #a18cd1);
+}
+
+/* Particle stars */
+.particle {
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:white;
+  border-radius:50%;
+  opacity:0.8;
+  animation: twinkle 3s infinite;
+}
+@keyframes twinkle {
+  0%,100% {opacity:0.5;}
+  50% {opacity:1;}
+}
+
+/* Floating hearts/confetti */
+.floaty {
+  position:absolute;
+  font-size:1.5em;
+  opacity:0.8;
+  animation: floaty 8s linear infinite;
+}
+@keyframes floaty {
+  0% {transform:translateY(0) rotate(0deg);}
+  100% {transform:translateY(-120vh) rotate(360deg);}
+}
+
+/* Glowing cake */
+.cake {
+  margin-top:50px;
+  font-size:5em;
+  animation: glowCake 2s ease-in-out infinite alternate;
+}
+@keyframes glowCake {
+  from {text-shadow:0 0 10px #ff66ff,0 0 20px #ff33cc;}
+  to {text-shadow:0 0 40px #fff,0 0 70px #ff66ff,0 0 100px #ff33cc;}
+}
+
+/* Headings fade-in */
+h2, .journey, .links, .carousel {opacity:0; transform:translateY(30px); animation:fadeInUp 1.5s ease forwards;}
+h2{animation-delay:0.5s;}
+.journey{animation-delay:1s;}
+.carousel{animation-delay:1.2s;}
+.links{animation-delay:1.5s;}
+@keyframes fadeInUp{to{opacity:1; transform:translateY(0);}}
+
+/* Links style */
+.links{margin-top:30px; display:flex; justify-content:center; gap:20px; flex-wrap:wrap;}
+.links a{
+  text-decoration:none;
+  font-size:1.2em;
+  padding:15px 25px;
+  border-radius:30px;
+  background:rgba(255,255,255,0.2);
+  box-shadow:0 0 15px #fff,0 0 30px #ff66cc;
+  color:white;
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+.links a:hover{
+  transform:scale(1.2) rotate(-2deg);
+  box-shadow:0 0 30px #fff,0 0 60px #ff66cc;
+  background:#ff66cc;
+}
+
+/* Balloons */
+.balloon{position:absolute; bottom:-150px; font-size:2em; animation:float 12s linear infinite;}
+@keyframes float{from{transform:translateY(0);} to{transform:translateY(-120vh);}}
+
+/* Sparkles */
+.sparkle{position:absolute; width:4px; height:4px; background:white; border-radius:50%; opacity:0.8; animation:sparkle 2s infinite;}
+@keyframes sparkle{0%{transform:scale(1); opacity:0.8;}50%{transform:scale(1.5);opacity:1;}100%{transform:scale(1);opacity:0.8;}}
+
+/* Carousel */
+.carousel img{border-radius:15px; margin:0 5px; animation:slide 10s linear infinite; transition:transform 0.3s;}
+.carousel img:hover{transform:scale(1.2) rotate(-2deg);}
+@keyframes slide{0%{transform:translateX(0);}50%{transform:translateX(-10px);}100%{transform:translateX(0);}}
+</style>
+</head>
+<body>
+
+<!-- BGM -->
+<audio id="bgm" loop>
+  <source src="Doraemon.mp3" type="audio/mpeg">
+</audio>
+
+<div class="cake">🎂 Happy Birthday! 🎂</div>
+<h2>The party starts here 🎉</h2>
+
+<div class="journey">🌟 Our Journey 🌟</div>
+
+<!-- Mini Carousel -->
+<div class="carousel">
+  <img src="1.jpg" width="120">
+  <img src="2.jpg" width="120">
+  <img src="3.jpg" width="120">
+  <img src="4.jpg" width="120">
+</div>
+
+<div class="links">
+  <a href="gallery.html">🖼️ Gallery</a>
+  <a href="wishes.html">💌 Wishes</a>
+  <a href="game.html">🎮 Game</a>
+  <a href="secret.html">🎁 Secret</a>
+</div>
+
+<script>
+// Chrome-safe BGM
+const bgm=document.getElementById("bgm");
+document.body.addEventListener("click",()=>{bgm.play().catch(e=>console.log("Audio blocked"));});
+
+// Floating balloons
+const colors=["🎈","🎉","🎊"];
+for(let i=0;i<8;i++){
+  let b=document.createElement("div");
+  b.className="balloon";
+  b.innerText=colors[Math.floor(Math.random()*colors.length)];
+  b.style.left=Math.random()*window.innerWidth+"px";
+  b.style.animationDuration=(6+Math.random()*8)+"s";
+  document.body.appendChild(b);
+}
+
+// Sparkles
+for(let i=0;i<20;i++){
+  let s=document.createElement("div");
+  s.className="sparkle";
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
+  s.style.animationDelay=Math.random()*3+"s";
+  document.body.appendChild(s);
+}
+
+// Particle stars
+for(let i=0;i<30;i++){
+  let p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"vw";
+  p.style.top=Math.random()*100+"vh";
+  p.style.width=Math.random()*3+2+"px";
+  p.style.height=Math.random()*3+2+"px";
+  document.body.appendChild(p);
+}
+
+// Floating hearts/confetti (reduced to 4)
+const floaties=["💖","💜","💛","🎊","✨"];
+for(let i=0;i<4;i++){
+  let f=document.createElement("div");
+  f.className="floaty";
+  f.innerText=floaties[Math.floor(Math.random()*floaties.length)];
+  f.style.left=Math.random()*100+"vw";
+  f.style.fontSize=(12+Math.random()*18)+"px";
+  f.style.animationDuration=(6+Math.random()*6)+"s";
+  f.style.animationDelay=Math.random()*5+"s";
+  document.body.appendChild(f);
+}
+</script>
+
+</body>
+</html>

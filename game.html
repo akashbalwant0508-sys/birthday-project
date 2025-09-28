@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess the Person</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #89f7fe, #66a6ff);
+      background-size: 400% 400%;
+      animation: gradient 12s ease infinite;
+      color: #fff;
+      text-align: center;
+      padding: 40px;
+    }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    h1 { font-size: 2.5em; text-shadow: 0 0 10px #fff; margin-bottom: 20px; }
+    #question { font-size: 1.5em; margin: 20px 0; }
+    .options { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin: 20px 0; }
+    .options button {
+      padding: 12px 20px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      box-shadow: 0 0 10px #fff;
+      transition: 0.3s;
+    }
+    .options button:hover { background: #ff66cc; transform: scale(1.1); }
+    #feedback { margin-top: 20px; font-size: 1.3em; font-weight: bold; }
+    #photo { margin-top: 30px; display: none; }
+    #photo img { max-width: 250px; border-radius: 15px; box-shadow: 0 0 20px #fff; animation: fadeIn 1s ease; }
+    @keyframes fadeIn { from {opacity: 0; transform: scale(0.8);} to {opacity: 1; transform: scale(1);} }
+    .back { display: block; margin-top: 50px; font-size: 1.2em; text-decoration: none; color: #fff; text-shadow: 0 0 10px #000; }
+  </style>
+</head>
+<body>
+
+<h1>🎉 Guess the Person 🎉</h1>
+
+<div id="question"></div>
+<div class="options" id="options"></div>
+<div id="feedback"></div>
+
+<div id="photo">
+  <img id="personPhoto" src="" alt="Person Photo">
+</div>
+
+<a class="back" href="main.html">⬅️ Back to explore more</a>
+
+<script>
+const people = [
+  {hints:["I am the coolest one 😎","I like to make fun of you 'Yadav ji' 😂"], correct:"Ayush Choudhary", options:["Animesh","Omji","Ayush Choudhary","Ekansh"], photo:"ayushc.jpg"},
+  {hints:["I am not what I look like 🤔","I have special relationship with PW owner 😉"], correct:"Ekansh", options:["Ekansh","Gaurav","Akash","Divyansh"], photo:"photo2.jpg"},
+  {hints:["Everybody pranks me 😅","I am an overthinker 💭"], correct:"Akash", options:["Omji","Akash","Ayush","Pallavi"], photo:"akash.jpg"},
+  {hints:["I am the center of attention 🌟","You named me something when we watched KFactory 🎥"], correct:"Gaurav", options:["Ekansh","Akash","Gaurav","Animesh"], photo:"gaurav.jpg"},
+  {hints:["I look like Harry Potter ⚡","I am a little too romantic ❤️"], correct:"Divyansh", options:["Ekansh","Divyansh","Ayush Choudhary","Aakhya"], photo:"photo5.jpg"},
+  {hints:["I look like I haven't slept in weeks 😴","I don’t talk much 🤐"], correct:"Aakhya", options:["Aakhya","Sambhavi","Kritika","Divyansh"], photo:"aakhya.jpg"},
+  {hints:["I am too hot 🔥","So hot that I turned black 🖤"], correct:"Ayush", options:["Ekansh","Divyansh","Ayush","Gaurav"], photo:"ayush.jpg"},
+  {hints:["I am like a boss 💼","I love to abuse 🤬"], correct:"Animesh", options:["Animesh","Ayush Choudhary","Ekansh","Omji"], photo:"animesh.jpg"},
+  {hints:["I was 5ft in 3rd class 📏","I like to do 3-5 😏"], correct:"Omji", options:["Ekansh","Omji","Animesh","Akash"], photo:"omji.jpg"},
+  {hints:["I have a special name 🐼","Hint: 2π 🔄"], correct:"Sambhavi", options:["Sambhavi","Kritika","Aakhya","Pallavi"], photo:"photo10.jpg"},
+  {hints:["I use putty instead of makeup 😂","I am called Yadav ji 🙈"], correct:"Pallavi", options:["Pallavi","Ekansh","Divyansh","Akash"], photo:"10.jpg"}
+];
+
+let current=0;
+let attempts=0;
+
+function loadPerson(){
+  attempts=0;
+  document.getElementById("feedback").innerHTML="";
+  document.getElementById("photo").style.display="none";
+  document.getElementById("question").innerHTML=people[current].hints[0];
+  const optionsDiv=document.getElementById("options");
+  optionsDiv.innerHTML="";
+  people[current].options.forEach(opt=>{
+    const btn=document.createElement("button");
+    btn.innerText=opt;
+    btn.onclick=()=>checkAnswer(opt);
+    optionsDiv.appendChild(btn);
+  });
+}
+
+function checkAnswer(choice){
+  const person=people[current];
+  const feedback=document.getElementById("feedback");
+  const question=document.getElementById("question");
+
+  if(choice===person.correct){
+    feedback.innerHTML="✅ Correct! It's "+person.correct+" 🎉";
+    document.getElementById("personPhoto").src=person.photo;
+    document.getElementById("photo").style.display="block";
+
+    setTimeout(()=>{
+      current++;
+      if(current<people.length){
+        loadPerson();
+      } else {
+        question.innerHTML="🎊 You finished the game! 🎊";
+        document.getElementById("options").innerHTML="";
+        feedback.innerHTML="Well done 🏆!";
+      }
+    },2500);
+
+  } else {
+    attempts++;
+    if(attempts===1){
+      feedback.innerHTML="❌ Try again!";
+      question.innerHTML=person.hints[1];
+    } else {
+      feedback.innerHTML="❌ Nope, keep trying!";
+    }
+  }
+}
+
+loadPerson();
+</script>
+
+</body>
+</html>
